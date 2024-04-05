@@ -1,0 +1,29 @@
+
+CREATE TABLE Artist (
+    id SERIAL PRIMARY KEY,
+    firstname VARCHAR(25) NOT NULL,
+    lastname VARCHAR(25) NOT NULL,
+    born DATE,
+    died DATE
+);
+
+CREATE TABLE Song (
+    id SERIAL PRIMARY KEY,
+    code_album VARCHAR(10) NOT NULL REFERENCES Album(code),
+    title VARCHAR(30) NOT NULL,
+    duration TIME NOT NULL
+);
+
+CREATE TABLE Album (
+    code VARCHAR(10) PRIMARY KEY,
+    title VARCHAR(30) NOT NULL,
+    recorded DATE NOT NULL,
+    label VARCHAR(30) NOT NULL,
+    available BOOLEAN NOT NULL
+);
+
+CREATE TABLE Play (
+    artist_id INT NOT NULL REFERENCES Artist(id),
+    song_id INT NOT NULL REFERENCES Song(id),
+    instrument VARCHAR(25) NOT NULL,
+    PRIMARY KEY (artist_id , song_id));
