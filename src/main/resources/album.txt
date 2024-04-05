@@ -1,0 +1,10 @@
+1,Thriller,1982-11-30,Epic Records,true
+2,The Dark Side of the Moon,1972-06-01,Harvest Records,true
+3,Abbey Road,1969-08-08,Apple Records,true
+4,Back in Black,1980-07-25,Atlantic Records,true
+5,Rumours,1976-02-04,Warner Bros. Records,true
+6,The Wall,1979-11-30,Columbia Records,true
+7,Born to Run,1975-08-25,Columbia Records,true
+8,Nevermind,1991-05-28,DGC Records,true
+9,Led Zeppelin IV,1971-11-08,Atlantic Records,true
+10,Hotel California,1976-03-22,Asylum Records,true

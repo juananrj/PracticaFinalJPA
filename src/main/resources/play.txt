@@ -1,0 +1,8 @@
+1,1,Vocals
+1,2,Guitar
+2,1,Bass
+3,1,Lead guitar
+4,1,Drums
+2,2,Bass
+3,2,Lead guitar
+4,2,Drums
