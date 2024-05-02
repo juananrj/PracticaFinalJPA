@@ -6,7 +6,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "play")
 @IdClass(PlaysPK.class)
-public class Play implements Serializable {
+public class Play {
 
     @Id
     @ManyToOne

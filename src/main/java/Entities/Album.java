@@ -1,14 +1,15 @@
 package Entities;
 
-
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
 @Entity
-@Table(name = "album")
+@Table( name = "album")
 public class Album {
 
     @Id
@@ -24,7 +25,7 @@ public class Album {
     @Column(name = "label")
     private String label;
 
-    @Column(name = "available")
+    @Column(name ="available")
     private boolean available;
 
     @OneToMany(mappedBy = "album")
@@ -36,7 +37,7 @@ public class Album {
         this.recorded = recorded;
         this.label = label;
         this.available = available;
-        this.songs = new HashSet<>();
+        this.songs = new HashSet<Song>();
     }
 
     public Album() {
@@ -90,4 +91,3 @@ public class Album {
         return "Album{code='" + this.code + "', title='" + this.title + "', recorded=" + this.recorded + ", label='" + this.label + "', available=" + this.available + "}";
     }
 }
-

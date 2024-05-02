@@ -2,16 +2,20 @@ import Entities.Album;
 import Entities.Artist;
 import Entities.Play;
 import Entities.Song;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
 import java.io.IOException;
 import java.text.ParseException;
 
 public class Main {
-    private static EntityManagerFactory entityManagerFactory;
+    public Main() {
+    }
+
+    private static SessionFactory factory;
 
     public static void main(String[] args) throws IOException, ParseException {
         FileAccessor fa = new FileAccessor();
@@ -20,106 +24,107 @@ public class Main {
         fa.readSongFile("src/main/resources/song.txt");
         fa.readPlayFile("src/main/resources/play.txt");
 
-        entityManagerFactory = Persistence.createEntityManagerFactory("MusicaPersistenceUnit");
-
-        Main main = new Main();
-
-        System.out.println("Leyendo artistas");
-        for (Artist artist : fa.artistList) {
-            System.out.println(artist.toString());
-            main.addArtist(artist);
+        // Session Factory
+        try {
+            factory = new Configuration().configure().buildSessionFactory();
+        } catch (Throwable ex) {
+            System.err.println("Failed to create sessionFactory object." + ex);
+            throw new ExceptionInInitializerError(ex);
         }
 
-        System.out.println("Leyendo álbumes");
-        for (Album album : fa.albumList) {
-            System.out.println(album.toString());
-            main.addAlbum(album);
+
+        Main MA = new Main();
+
+        System.out.println("Se esta leyendo");
+        for (int i = 0; i < fa.artistList.size(); i++) {
+            System.out.println(fa.artistList.get(i).toString());
+            MA.addArtist(fa.artistList.get(i));
         }
 
-        System.out.println("Leyendo canciones");
-        for (Song song : fa.songList) {
-            System.out.println(song.toString());
-            main.addSong(song);
+        System.out.println("Se esta leyendo");
+        for (int i = 0; i < fa.albumList.size(); i++) {
+            System.out.println(fa.albumList.get(i).toString());
+            MA.addAlbum(fa.albumList.get(i));
         }
 
-        System.out.println("Leyendo reproducciones");
-        for (Play play : fa.playList) {
-            System.out.println(play.toString());
-            main.addPlay(play);
+        System.out.println("Se esta leyendo");
+        for (int i = 0; i < fa.songList.size(); i++) {
+            System.out.println(fa.songList.get(i).toString());
+            MA.addSong(fa.songList.get(i));
         }
 
-        entityManagerFactory.close();
+        System.out.println("Se esta leyendo");
+        for (int i = 0; i < fa.songList.size(); i++) {
+            System.out.println(fa.playList.get(i).toString());
+            MA.addPlay(fa.playList.get(i));
+        }
     }
 
     public void addArtist(Artist artist) {
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        EntityTransaction transaction = null;
+        Session session = factory.openSession();
+        Transaction tx = null;
+        Integer ArtistID = null;
         try {
-            transaction = entityManager.getTransaction();
-            transaction.begin();
-            entityManager.persist(artist);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null && transaction.isActive()) {
-                transaction.rollback();
-            }
+            tx = session.beginTransaction();
+            ArtistID = (Integer) session.save(artist);
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null)
+                tx.rollback();
             e.printStackTrace();
         } finally {
-            entityManager.close();
+            session.close();
         }
     }
 
     public void addAlbum(Album album) {
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        EntityTransaction transaction = null;
+        Session session = factory.openSession();
+        Transaction tx = null;
+        String AlbumID = null;
         try {
-            transaction = entityManager.getTransaction();
-            transaction.begin();
-            entityManager.persist(album);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null && transaction.isActive()) {
-                transaction.rollback();
-            }
+            tx = session.beginTransaction();
+            AlbumID = (String) session.save(album);
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null)
+                tx.rollback();
             e.printStackTrace();
         } finally {
-            entityManager.close();
+            session.close();
         }
     }
 
     public void addSong(Song song) {
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        EntityTransaction transaction = null;
+        Session session = factory.openSession();
+        Transaction tx = null;
+        Integer SongID = null;
         try {
-            transaction = entityManager.getTransaction();
-            transaction.begin();
-            entityManager.persist(song);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null && transaction.isActive()) {
-                transaction.rollback();
-            }
+            tx = session.beginTransaction();
+            SongID = (Integer) session.save(song);
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null)
+                tx.rollback();
             e.printStackTrace();
         } finally {
-            entityManager.close();
+            session.close();
         }
     }
 
     public void addPlay(Play play) {
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        EntityTransaction transaction = null;
+        Session session = factory.openSession();
+        Transaction tx = null;
         try {
-            transaction = entityManager.getTransaction();
-            transaction.begin();
-            entityManager.persist(play);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null && transaction.isActive()) {
-                transaction.rollback();
-            }
+            tx = session.beginTransaction();
+            session.save(play);
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null)
+                tx.rollback();
             e.printStackTrace();
         } finally {
-            entityManager.close();
+            session.close();
         }
     }
 }
+

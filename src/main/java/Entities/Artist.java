@@ -6,7 +6,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "artist")
-public class Artist implements Serializable {
+public class Artist {
 
     @Id
     @Column(name = "id")
@@ -25,7 +25,7 @@ public class Artist implements Serializable {
     private Date died;
 
     public Artist(int id, String firstname, String lastname, Date born, Date died) {
-        this.id =id;
+        this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
         this.born = born;
@@ -79,4 +79,3 @@ public class Artist implements Serializable {
         return "Artist{id=" + this.id + ", firstname='" + this.firstname + "', lastname='" + this.lastname + "', born=" + this.born + ", died=" + this.died + "}";
     }
 }
-

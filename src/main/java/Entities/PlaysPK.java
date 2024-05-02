@@ -1,41 +1,34 @@
 package Entities;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
-@Embeddable
 public class PlaysPK implements Serializable {
 
-    @ManyToOne
-    @JoinColumn(name = "id_artist")
-    private Artist artist;
-
-    @ManyToOne
-    @JoinColumn(name = "id_song")
-    private Song song;
+    private Integer artist;
+    private Integer song;
 
     public PlaysPK() {
     }
 
-    public PlaysPK(Artist artist, Song song) {
+    public PlaysPK(Integer artist, Integer song) {
         this.artist = artist;
         this.song = song;
     }
 
-    public Artist getArtist() {
+    public Integer getArtist() {
         return artist;
     }
 
-    public void setArtist(Artist artist) {
+    public void setArtist(Integer artist) {
         this.artist = artist;
     }
 
-    public Song getSong() {
+    public Integer getSong() {
         return song;
     }
 
-    public void setSong(Song song) {
+    public void setSong(Integer song) {
         this.song = song;
     }
 
