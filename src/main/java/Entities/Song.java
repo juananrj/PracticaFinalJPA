@@ -22,10 +22,13 @@ public class Song implements Serializable {
     @Column(name = "duration")
     private LocalTime duration;
 
+
+
     public Song() {
     }
 
-    public Song(Album album, String title, LocalTime duration) {
+    public Song(int id, Album album, String title, LocalTime duration) {
+        this.id = id;
         this.album = album;
         this.title = title;
         this.duration = duration;
@@ -69,7 +72,7 @@ public class Song implements Serializable {
                 "id=" + id +
                 ", album=" + album +
                 ", title='" + title + '\'' +
-                ", duration=" + duration +
+                ", duration='" + duration + '\'' +
                 '}';
     }
 }
